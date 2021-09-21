@@ -9,5 +9,6 @@ const User = DefineUser(sequelize, DataTypes)
 
 // sync
 syncDb(sequelize, { alter: true })
+// syncDb(sequelize, { force: true })
 
 module.exports = { User }
