@@ -12,7 +12,7 @@ router.post('/register', async (req, res) => {
          password: password,
       })
       message = {
-         msg: 'User Created',
+         message: 'User Created',
          user,
       }
    } catch (err) {
@@ -21,7 +21,7 @@ router.post('/register', async (req, res) => {
               message: 'Username is already in use.',
            })
          : res.status(500).json({
-              msg: 'Failed to create user.',
+              message: 'Failed to create user.',
               err,
            })
    }
@@ -36,21 +36,18 @@ router.post('/login', async (req, res) => {
       const user = await User.findOne({
          where: { email: email, password: password },
       })
-      if (user) {
-         message = {
-            msg: 'User found.',
-            user,
-         }
-      } else {
-         res.status(404).json({
-            msg: 'User does not exist.',
-            err,
-         })
-      }
+      !user
+         ? (message = {
+              message: 'User does not exist.',
+           })
+         : (message = {
+              message: 'User found.',
+              user,
+           })
    } catch (err) {
       console.log(err)
       res.status(500).json({
-         msg: 'Cannot find user.',
+         message: 'Failed to login user.',
          err,
       })
    }
